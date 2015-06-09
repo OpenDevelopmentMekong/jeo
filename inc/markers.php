@@ -183,6 +183,7 @@ class JEO_Markers {
 			$marker_query->parse_query();
 			$query = $marker_query->query_vars;
 			$query['map_id'] = $post->ID;
+			unset($query['page_id']);
 		}
 
 		if($wp_query->get('map_id') && !$wp_query->get('p')) {
@@ -572,7 +573,7 @@ class JEO_Markers {
 		$lon = get_post_meta($post_id, 'geocode_longitude', true);
 
 		if($lat && is_numeric($lat) && $lon && is_numeric($lon))
-			$coordinates = array($lon, $lat);
+			$coordinates = array(floatval($lon), floatval($lat));
 		else
 			$coordinates = false;
 

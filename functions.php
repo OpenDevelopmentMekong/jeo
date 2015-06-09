@@ -111,7 +111,7 @@ function jeo_comment( $comment, $args, $depth ) {
 						get_comment_author_link()
 					);
 					?>
-				</span> | 
+				</span> |
 				<span class="comment-date">
 					<?php
 					printf( '<a href="%1$s"><time datetime="%2$s">%3$s</time></a>',
