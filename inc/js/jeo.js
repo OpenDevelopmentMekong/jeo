@@ -169,7 +169,7 @@ var jeo = {};
 
 			if(layer.type == 'cartodb' && layer.cartodb_type == 'viz') {
 
-				var pLayer = cartodb.createLayer(map, layer.cartodb_viz_url, {legends: false});
+			    var pLayer = cartodb.createLayer(map, layer.cartodb_viz_url, {legends: false, https: true });
 
 				if(layer.legend) {
 					pLayer._legend = layer.legend;
