@@ -41,7 +41,7 @@ class JEO_Layers {
 			'labels' => $labels,
 			'hierarchical' => true,
 			'description' => __('JEO Layers', 'jeo'),
-			'supports' => array('title'),
+			'supports' => array('title','editor'),
 			'rewrite' => array('slug' => 'layers'),
 			'public' => true,
 			'show_in_menu' => false,
