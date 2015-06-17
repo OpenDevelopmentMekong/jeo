@@ -31,6 +31,7 @@
     self._layers.status.push({
      ID: layer.ID,
      content: layer.content,
+     legend: layer.legend,
      on: true
     });
    });
