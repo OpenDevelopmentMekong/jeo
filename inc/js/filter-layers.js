@@ -1,204 +1,205 @@
 (function($) {
 
-	jeo.filterLayers = L.Control.extend({
+ jeo.filterLayers = L.Control.extend({
 
-		options: {
-			position: 'bottomleft'
-		},
+  options: {
+   position: 'bottomleft'
+  },
 
-		onAdd: function(map) {
+  onAdd: function(map) {
 
-			if(!this._map.conf.filteringLayers || this._map.conf.disableInteraction)
-				return false;
+   if(!this._map.conf.filteringLayers || this._map.conf.disableInteraction)
+    return false;
 
-			var self = this;
+   var self = this;
 
-			this._map = map;
+   this._map = map;
 
-			this._map.filterLayers = this;
+   this._map.filterLayers = this;
 
-			this._container = L.DomUtil.create('div', 'jeo-filter-layers');
+   this._container = L.DomUtil.create('div', 'jeo-filter-layers');
 
-			this._$ = $(this._container);
+   this._$ = $(this._container);
 
-			this._layers = map.conf.filteringLayers;
+   this._layers = map.conf.filteringLayers;
 
-			this._swapWidget;
-			this._switchWidget;
+   this._swapWidget;
+   this._switchWidget;
 
-			this._layers.status = [];
-			_.each(this._map.conf.layers, function(layer) {
-				self._layers.status.push({
-					ID: layer.ID,
-					on: true
-				});
-			});
+   this._layers.status = [];
+   _.each(this._map.conf.layers, function(layer) {
+    self._layers.status.push({
+     ID: layer.ID,
+     content: layer.content,
+     on: true
+    });
+   });
 
-			this._build();
+   this._build();
 
-			return this._container;
+   return this._container;
 
-		},
+  },
 
-		_build: function() {
+  _build: function() {
 
-			var self = this;
+   var self = this;
 
-			/*
-			 * Swapables
-			 */
-			if(this._layers.swapLayers && this._layers.swapLayers.length >= 2) {
-				var swap = this._layers.swapLayers;
-				var list = '';
-				_.each(swap, function(layer) {
-					var attrs = '';
-					if(layer.first)
-						attrs = 'class="active"';
-					else
-						self._disableLayer(layer.ID);
-					list += '<li data-layer="' + layer.ID + '" ' + attrs + '>' + layer.title + '</li>';
-				});
+   /*
+    * Swapables
+    */
+   if(this._layers.swapLayers && this._layers.swapLayers.length >= 2) {
+    var swap = this._layers.swapLayers;
+    var list = '';
+    _.each(swap, function(layer) {
+     var attrs = '';
+     if(layer.first)
+      attrs = 'class="active"';
+     else
+      self._disableLayer(layer.ID);
+      list += '<li draggable="true" class="layer-item" data-layer="' + layer.ID + '" ' + attrs + '><h2>' + layer.title + '</h2><p>'+ layer.content +'</p></li>';
+    });
 
-				this._swapWidget = '<ul class="swap-layers">' + list + '</ul>';
-				this._$.append(this._swapWidget);
+    this._swapWidget = '<ul class="swap-layers">' + list + '</ul>';
+    this._$.append(this._swapWidget);
 
-				this._$.on('click', '.swap-layers li', function() {
-					self._swapLayer($(this).data('layer'));
-				});
-			}
+    this._$.on('click', '.swap-layers li', function() {
+     self._swapLayer($(this).data('layer'));
+    });
+   }
 
-			/*
-			 * Switchables
-			 */
-			if(this._layers.switchLayers && this._layers.switchLayers.length) {
-				var switchable = this._layers.switchLayers;
-				var list = '';
-				_.each(switchable, function(layer) {
-					var attrs = 'class="active"';
-					if(layer.hidden) {
-						attrs = '';
-						self._disableLayer(layer.ID);
-					}
-					list += '<li data-layer="' + layer.ID + '" ' + attrs + '>' + layer.title + '</li>';
-				});
+   /*
+    * Switchables
+    */
+   if(this._layers.switchLayers && this._layers.switchLayers.length) {
+    var switchable = this._layers.switchLayers;
+    var list = '';
+    _.each(switchable, function(layer) {
+     var attrs = 'class="active"';
+     if(layer.hidden) {
+      attrs = '';
+      self._disableLayer(layer.ID);
+     }
+     list += '<li draggable="true" class="layer-item" data-layer="' + layer.ID + '" ' + attrs + '><h2>' + layer.title + '</h2><p>'+ layer.content +'</p></li>';
+    });
 
-				this._switchWidget = '<ul class="switch-layers">' + list + '</ul>';
-				this._$.append(this._switchWidget);
+    this._switchWidget = '<ul class="switch-layers">' + list + '</ul>';
+    this._$.append(this._switchWidget);
 
-				this._$.on('click', '.switch-layers li', function() {
-					self._switchLayer($(this).data('layer'));
-				});
+    this._$.on('click', '.switch-layers li', function() {
+     self._switchLayer($(this).data('layer'));
+    });
 
-			}
+   }
 
-			this._update();
+   this._update();
 
-			return this._container;
+   return this._container;
 
-		},
+  },
 
-		_switchLayer: function(layer) {
+  _switchLayer: function(layer) {
 
-			if(this._getStatus(layer).on) {
+   if(this._getStatus(layer).on) {
 
-				this._disableLayer(layer);
-				this._$.find('li[data-layer="' + layer + '"]').removeClass('active');
+    this._disableLayer(layer);
+    this._$.find('li[data-layer="' + layer + '"]').removeClass('active');
 
-			} else {
+   } else {
 
-				this._enableLayer(layer);
-				this._$.find('li[data-layer="' + layer + '"]').addClass('active');
+    this._enableLayer(layer);
+    this._$.find('li[data-layer="' + layer + '"]').addClass('active');
 
-			}
+   }
 
-			this._update();
+   this._update();
 
-		},
+  },
 
-		_swapLayer: function(layer) {
+  _swapLayer: function(layer) {
 
-			var self = this;
+   var self = this;
 
-			if(this._getStatus(layer).on)
-				return;
+   if(this._getStatus(layer).on)
+    return;
 
-			_.each(this._layers.swapLayers, function(swapLayer) {
+   _.each(this._layers.swapLayers, function(swapLayer) {
 
-				if(swapLayer.ID == layer) {
+    if(swapLayer.ID == layer) {
 
-					self._enableLayer(layer);
+     self._enableLayer(layer);
 
-					self._$.find('li[data-layer="' + layer + '"]').addClass('active');
+     self._$.find('li[data-layer="' + layer + '"]').addClass('active');
 
-				} else {
+    } else {
 
-					if(self._getStatus(swapLayer.ID).on) {
+     if(self._getStatus(swapLayer.ID).on) {
 
-						self._disableLayer(swapLayer.ID);
+      self._disableLayer(swapLayer.ID);
 
-						self._$.find('li[data-layer="' + swapLayer.ID + '"]').removeClass('active');
+      self._$.find('li[data-layer="' + swapLayer.ID + '"]').removeClass('active');
 
-					}
+     }
 
-				}
-			});
-			this._update();
+    }
+   });
+   this._update();
 
-		},
+  },
 
-		_disableLayer: function(layer) {
+  _disableLayer: function(layer) {
 
-			this._layers.status[this._getStatusIndex(layer)] = {
-				ID: layer,
-				on: false
-			};
+   this._layers.status[this._getStatusIndex(layer)] = {
+    ID: layer,
+    on: false
+   };
 
-		},
+  },
 
-		_enableLayer: function(layer) {
+  _enableLayer: function(layer) {
 
-			this._layers.status[this._getStatusIndex(layer)] = {
-				ID: layer,
-				on: true
-			};
+   this._layers.status[this._getStatusIndex(layer)] = {
+    ID: layer,
+    on: true
+   };
 
-		},
+  },
 
-		_update: function() {
+  _update: function() {
 
-			this._map.$.find('.map-tooltip').hide();
-			jeo.loadLayers(this._map, jeo.parseLayers(this._map, this._getActiveLayers()));
+   this._map.$.find('.map-tooltip').hide();
+   jeo.loadLayers(this._map, jeo.parseLayers(this._map, this._getActiveLayers()));
 
-		},
+  },
 
-		_getStatus: function(layer) {
-			return _.find(this._layers.status, function(l) { return layer == l.ID; });
-		},
+  _getStatus: function(layer) {
+   return _.find(this._layers.status, function(l) { return layer == l.ID; });
+  },
 
-		_getStatusIndex: function(layer) {
+  _getStatusIndex: function(layer) {
 
-			var index;
-			_.each(this._layers.status, function(l, i) {
-				if(layer == l.ID)
-					index = i;
-			});
-			return index;
+   var index;
+   _.each(this._layers.status, function(l, i) {
+    if(layer == l.ID)
+     index = i;
+   });
+   return index;
 
-		},
+  },
 
-		_getActiveLayers: function() {
-			var self = this;
-			var activeLayers = [];
-			_.each(this._layers.status, function(layer) {
-				if(layer.on) {
-					var actualLayer = _.find(self._map.conf.layers, function(l) { return l.ID == layer.ID; });
-					activeLayers.push(actualLayer);
-				}
-			});
-			return activeLayers;
+  _getActiveLayers: function() {
+   var self = this;
+   var activeLayers = [];
+   _.each(this._layers.status, function(layer) {
+    if(layer.on) {
+     var actualLayer = _.find(self._map.conf.layers, function(l) { return l.ID == layer.ID; });
+     activeLayers.push(actualLayer);
+    }
+   });
+   return activeLayers;
 
-		}
+  }
 
-	});
+ });
 
 })(jQuery);
