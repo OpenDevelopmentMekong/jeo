@@ -281,7 +281,8 @@
     var switchLayer = {
      ID: layer.ID,
      title: layer.title,
-     content: layer.post_content
+     content: layer.post_content,
+     legend: layer.legend
     };
     if(layer.hidden)
      switchLayer.hidden = true;
@@ -291,7 +292,8 @@
     var swapLayer = {
      ID: layer.ID,
      title: layer.title,
-     content: layer.post_content
+     content: layer.post_content,
+     legend: layer.legend
     };
     if(layer.first_swap)
      swapLayer.first = true;

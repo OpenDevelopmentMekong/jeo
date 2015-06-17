@@ -57,14 +57,14 @@
       attrs = 'class="active"';
      else
       self._disableLayer(layer.ID);
-      list += '<li draggable="true" class="layer-item" data-layer="' + layer.ID + '" ' + attrs + '><h2>' + layer.title + '</h2><p>'+ layer.content +'</p></li>';
+     list += '<li class="layer-item" data-layer="' + layer.ID + '" ' + attrs + '><h2>' + layer.title + '</h2><p>'+ layer.content +'</p><p>'+layer.legend+'</p></li>';
     });
 
     this._swapWidget = '<ul class="swap-layers">' + list + '</ul>';
     this._$.append(this._swapWidget);
 
     this._$.on('click', '.swap-layers li', function() {
-     self._swapLayer($(this).data('layer'));
+      self._swapLayer($(this).data('layer'));
     });
    }
 
@@ -80,7 +80,7 @@
       attrs = '';
       self._disableLayer(layer.ID);
      }
-     list += '<li draggable="true" class="layer-item" data-layer="' + layer.ID + '" ' + attrs + '><h2>' + layer.title + '</h2><p>'+ layer.content +'</p></li>';
+     list += '<li class="layer-item" data-layer="' + layer.ID + '" ' + attrs + '><h2>' + layer.title + '</h2><p>'+ layer.content +'</p><p>'+layer.legend+'</p></li>';
     });
 
     this._switchWidget = '<ul class="switch-layers">' + list + '</ul>';
@@ -197,7 +197,6 @@
     }
    });
    return activeLayers;
-
   }
 
  });
