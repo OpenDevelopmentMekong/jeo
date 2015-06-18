@@ -384,7 +384,7 @@ var geocodeBox;
 				box.map = new L.map(mapCanvasID);
 				box.map.setView([0,0], 2);
 
-				box.map.addLayer(L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png'));
+				box.map.addLayer(L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png'));
 				box.map.addLayer(box.markerLayer);
 
 				box.isMapReady = true;
