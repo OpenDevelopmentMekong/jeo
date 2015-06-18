@@ -69,7 +69,7 @@
 				query.bounded = 1;
 			}
 
-			$.getJSON('http://nominatim.openstreetmap.org/search.php?json_callback=?', query, function(data) {
+			$.getJSON('https://nominatim.openstreetmap.org/search.php?json_callback=?', query, function(data) {
 				if(data.length)
 					self._draw(data);
 				else
