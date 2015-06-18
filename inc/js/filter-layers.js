@@ -100,7 +100,8 @@
      list += '<p class="layer-excerpt">'+ layer.excerpt +'</p>';
      list += '<p class="layer-content">'+ layer.content +'</p>';
      list += '<div class="toggles">'
-     list += '<a class="toggle-text" href="#">More</a>';
+     if (layer.content)
+      list += '<a class="toggle-text" href="#">More</a>';
      if (layer.legend)
       list += '<a class="toggle-legend" href="#">Show legend</a>';
      list += '</div>'
