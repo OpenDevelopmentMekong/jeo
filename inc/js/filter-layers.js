@@ -1,204 +1,230 @@
 (function($) {
 
-	jeo.filterLayers = L.Control.extend({
+ jeo.filterLayers = L.Control.extend({
+
+  options: {
+   position: 'bottomleft'
+  },
+
+  onAdd: function(map) {
+
+   if(!this._map.conf.filteringLayers || this._map.conf.disableInteraction)
+    return false;
+
+   var self = this;
+
+   this._map = map;
+
+   this._map.filterLayers = this;
+
+   this._container = L.DomUtil.create('div', 'jeo-filter-layers');
+
+   this._$ = $(this._container);
+
+   this._layers = map.conf.filteringLayers;
+
+   this._swapWidget;
+   this._switchWidget;
+
+   this._layers.status = [];
+   _.each(this._map.conf.layers, function(layer) {
+    self._layers.status.push({
+     ID: layer.ID,
+     content: layer.content,
+     excerpt: layer.excerpt,
+     legend: layer.legend,
+     on: true
+    });
+   });
+
+   this._build();
+
+   return this._container;
 
-		options: {
-			position: 'bottomleft'
-		},
+  },
 
-		onAdd: function(map) {
+  _build: function() {
 
-			if(!this._map.conf.filteringLayers || this._map.conf.disableInteraction)
-				return false;
+   var self = this;
 
-			var self = this;
+   /*
+    * Swapables
+    */
+   if(this._layers.swapLayers && this._layers.swapLayers.length >= 2) {
+    var swap = this._layers.swapLayers;
+    var list = '';
+    _.each(swap, function(layer) {
+     var attrs = '';
+     if(layer.first)
+      attrs = 'class="active"';
+     else
+      self._disableLayer(layer.ID);
 
-			this._map = map;
+     var status = self._getStatus(layer.ID).on ? " active" : "";
+     list += '<li class="layer-item" data-layer="' + layer.ID + '" ' + attrs + '>';
+     list += '<div class="layer-status'+status+'"/><h2 class="'+status+'">' + layer.title + '</h2>';
+     list += '<p>'+ layer.excerpt +'</p>';
+     list += '<div class="toggles">'
+     if (layer.legend)
+      list += '<a href="#">Show legend</a>';
+     list += '</div>'
+     if (layer.legend)
+      list += '<div class="legend">'+layer.legend+'</div>'
+     list += '</li>';
+    });
 
-			this._map.filterLayers = this;
+    this._swapWidget = '<ul class="swap-layers">' + list + '</ul>';
+    this._$.append(this._swapWidget);
 
-			this._container = L.DomUtil.create('div', 'jeo-filter-layers');
+    this._$.on('click', '.swap-layers li', function() {
+      self._swapLayer($(this).data('layer'));
+    });
+   }
 
-			this._$ = $(this._container);
+   /*
+    * Switchables
+    */
+   if(this._layers.switchLayers && this._layers.switchLayers.length) {
+    var switchable = this._layers.switchLayers;
+    var list = '';
+    _.each(switchable, function(layer) {
+     var attrs = 'class="active"';
+     if(layer.hidden) {
+      attrs = '';
+      self._disableLayer(layer.ID);
+     }
+     self._enableLayer(layer.ID);
+     var status = self._getStatus(layer.ID).on ? " active" : "";
+     list += '<li class="layer-item" data-layer="' + layer.ID + '" ' + attrs + '>';
+     list += '<div class="layer-status'+status+'"/><h2 class="'+status+'">' + layer.title + '</h2>';
+     list += '<p class="layer-excerpt">'+ layer.excerpt +'</p>';
+     list += '<p class="layer-content">'+ layer.content +'</p>';
+     list += '<div class="toggles">'
+     list += '<a class="toggle-text" href="#">More</a>';
+     if (layer.legend)
+      list += '<a class="toggle-legend" href="#">Show legend</a>';
+     list += '</div>'
+     if (layer.legend)
+      list += '<div class="legend">'+layer.legend+'</div>'
+     list += '</li>';
+    });
 
-			this._layers = map.conf.filteringLayers;
+    this._switchWidget = '<ul class="switch-layers">' + list + '</ul>';
+    this._$.append(this._switchWidget);
 
-			this._swapWidget;
-			this._switchWidget;
+    this._$.on('click', '.switch-layers li', function() {
+     self._switchLayer($(this).data('layer'));
+    });
 
-			this._layers.status = [];
-			_.each(this._map.conf.layers, function(layer) {
-				self._layers.status.push({
-					ID: layer.ID,
-					on: true
-				});
-			});
+   }
 
-			this._build();
+   this._update();
 
-			return this._container;
+   return this._container;
 
-		},
+  },
 
-		_build: function() {
+  _switchLayer: function(layer) {
 
-			var self = this;
+   if(this._getStatus(layer).on) {
 
-			/*
-			 * Swapables
-			 */
-			if(this._layers.swapLayers && this._layers.swapLayers.length >= 2) {
-				var swap = this._layers.swapLayers;
-				var list = '';
-				_.each(swap, function(layer) {
-					var attrs = '';
-					if(layer.first)
-						attrs = 'class="active"';
-					else
-						self._disableLayer(layer.ID);
-					list += '<li data-layer="' + layer.ID + '" ' + attrs + '>' + layer.title + '</li>';
-				});
+    this._disableLayer(layer);
+    this._$.find('li[data-layer="' + layer + '"]').removeClass('active');
 
-				this._swapWidget = '<ul class="swap-layers">' + list + '</ul>';
-				this._$.append(this._swapWidget);
+   } else {
 
-				this._$.on('click', '.swap-layers li', function() {
-					self._swapLayer($(this).data('layer'));
-				});
-			}
+    this._enableLayer(layer);
+    this._$.find('li[data-layer="' + layer + '"]').addClass('active');
 
-			/*
-			 * Switchables
-			 */
-			if(this._layers.switchLayers && this._layers.switchLayers.length) {
-				var switchable = this._layers.switchLayers;
-				var list = '';
-				_.each(switchable, function(layer) {
-					var attrs = 'class="active"';
-					if(layer.hidden) {
-						attrs = '';
-						self._disableLayer(layer.ID);
-					}
-					list += '<li data-layer="' + layer.ID + '" ' + attrs + '>' + layer.title + '</li>';
-				});
+   }
 
-				this._switchWidget = '<ul class="switch-layers">' + list + '</ul>';
-				this._$.append(this._switchWidget);
+   this._update();
 
-				this._$.on('click', '.switch-layers li', function() {
-					self._switchLayer($(this).data('layer'));
-				});
+  },
 
-			}
+  _swapLayer: function(layer) {
 
-			this._update();
+   var self = this;
 
-			return this._container;
+   if(this._getStatus(layer).on)
+    return;
 
-		},
+   _.each(this._layers.swapLayers, function(swapLayer) {
 
-		_switchLayer: function(layer) {
+    if(swapLayer.ID == layer) {
 
-			if(this._getStatus(layer).on) {
+     self._enableLayer(layer);
 
-				this._disableLayer(layer);
-				this._$.find('li[data-layer="' + layer + '"]').removeClass('active');
+     self._$.find('li[data-layer="' + layer + '"]').addClass('active');
 
-			} else {
+    } else {
 
-				this._enableLayer(layer);
-				this._$.find('li[data-layer="' + layer + '"]').addClass('active');
+     if(self._getStatus(swapLayer.ID).on) {
 
-			}
+      self._disableLayer(swapLayer.ID);
 
-			this._update();
+      self._$.find('li[data-layer="' + swapLayer.ID + '"]').removeClass('active');
 
-		},
+     }
 
-		_swapLayer: function(layer) {
+    }
+   });
+   this._update();
 
-			var self = this;
+  },
 
-			if(this._getStatus(layer).on)
-				return;
+  _disableLayer: function(layer) {
 
-			_.each(this._layers.swapLayers, function(swapLayer) {
+   this._layers.status[this._getStatusIndex(layer)] = {
+    ID: layer,
+    on: false
+   };
 
-				if(swapLayer.ID == layer) {
+  },
 
-					self._enableLayer(layer);
+  _enableLayer: function(layer) {
 
-					self._$.find('li[data-layer="' + layer + '"]').addClass('active');
+   this._layers.status[this._getStatusIndex(layer)] = {
+    ID: layer,
+    on: true
+   };
 
-				} else {
+  },
 
-					if(self._getStatus(swapLayer.ID).on) {
+  _update: function() {
 
-						self._disableLayer(swapLayer.ID);
+   this._map.$.find('.map-tooltip').hide();
+   jeo.loadLayers(this._map, jeo.parseLayers(this._map, this._getActiveLayers()));
 
-						self._$.find('li[data-layer="' + swapLayer.ID + '"]').removeClass('active');
+  },
 
-					}
+  _getStatus: function(layer) {
+   return _.find(this._layers.status, function(l) { return layer == l.ID; });
+  },
 
-				}
-			});
-			this._update();
+  _getStatusIndex: function(layer) {
 
-		},
+   var index;
+   _.each(this._layers.status, function(l, i) {
+    if(layer == l.ID)
+     index = i;
+   });
+   return index;
 
-		_disableLayer: function(layer) {
+  },
 
-			this._layers.status[this._getStatusIndex(layer)] = {
-				ID: layer,
-				on: false
-			};
+  _getActiveLayers: function() {
+   var self = this;
+   var activeLayers = [];
+   _.each(this._layers.status, function(layer) {
+    if(layer.on) {
+     var actualLayer = _.find(self._map.conf.layers, function(l) { return l.ID == layer.ID; });
+     activeLayers.push(actualLayer);
+    }
+   });
+   return activeLayers;
+  }
 
-		},
-
-		_enableLayer: function(layer) {
-
-			this._layers.status[this._getStatusIndex(layer)] = {
-				ID: layer,
-				on: true
-			};
-
-		},
-
-		_update: function() {
-
-			this._map.$.find('.map-tooltip').hide();
-			jeo.loadLayers(this._map, jeo.parseLayers(this._map, this._getActiveLayers()));
-
-		},
-
-		_getStatus: function(layer) {
-			return _.find(this._layers.status, function(l) { return layer == l.ID; });
-		},
-
-		_getStatusIndex: function(layer) {
-
-			var index;
-			_.each(this._layers.status, function(l, i) {
-				if(layer == l.ID)
-					index = i;
-			});
-			return index;
-
-		},
-
-		_getActiveLayers: function() {
-			var self = this;
-			var activeLayers = [];
-			_.each(this._layers.status, function(layer) {
-				if(layer.on) {
-					var actualLayer = _.find(self._map.conf.layers, function(l) { return l.ID == layer.ID; });
-					activeLayers.push(actualLayer);
-				}
-			});
-			return activeLayers;
-
-		}
-
-	});
+ });
 
 })(jQuery);
