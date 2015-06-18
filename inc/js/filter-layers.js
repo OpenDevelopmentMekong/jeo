@@ -58,7 +58,16 @@
       attrs = 'class="active"';
      else
       self._disableLayer(layer.ID);
-     list += '<li class="layer-item" data-layer="' + layer.ID + '" ' + attrs + '><h2>' + layer.title + '</h2><p>'+ layer.content +'</p><p>'+layer.legend+'</p></li>';
+      list += '<li class="layer-item" data-layer="' + layer.ID + '" ' + attrs + '>';
+      list += '<div class="layer-status"/><h2>' + layer.title + '</h2>';
+      list += '<p>'+ layer.content +'</p>';
+      list += '<div class="toggles">'
+      if (layer.legend)
+       list += '<a href="#">Show legend</a>';
+      list += '</div>'
+      if (layer.legend)
+       list += '<div class="legend">'+layer.legend+'</div>'
+      list += '</li>';
     });
 
     this._swapWidget = '<ul class="swap-layers">' + list + '</ul>';
@@ -81,7 +90,16 @@
       attrs = '';
       self._disableLayer(layer.ID);
      }
-     list += '<li class="layer-item" data-layer="' + layer.ID + '" ' + attrs + '><h2>' + layer.title + '</h2><p>'+ layer.content +'</p><p>'+layer.legend+'</p></li>';
+     list += '<li class="layer-item" data-layer="' + layer.ID + '" ' + attrs + '>';
+     list += '<div class="layer-status"/><h2>' + layer.title + '</h2>';
+     list += '<p>'+ layer.content +'</p>';
+     list += '<div class="toggles">'
+     if (layer.legend)
+      list += '<a href="#">Show legend</a>';
+     list += '</div>'
+     if (layer.legend)
+      list += '<div class="legend">'+layer.legend+'</div>'
+     list += '</li>';
     });
 
     this._switchWidget = '<ul class="switch-layers">' + list + '</ul>';
