@@ -271,6 +271,7 @@ var jeo = {};
      ID: layer.ID,
      title: layer.title,
      content: layer.post_content,
+     excerpt: layer.excerpt,
      legend: layer.legend
     };
     if(layer.hidden)
@@ -282,6 +283,7 @@ var jeo = {};
      ID: layer.ID,
      title: layer.title,
      content: layer.post_content,
+     excerpt: layer.excerpt,
      legend: layer.legend
     };
     if(layer.first_swap)

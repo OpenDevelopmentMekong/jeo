@@ -31,6 +31,7 @@
     self._layers.status.push({
      ID: layer.ID,
      content: layer.content,
+     excerpt: layer.excerpt,
      legend: layer.legend,
      on: true
     });
@@ -58,16 +59,18 @@
       attrs = 'class="active"';
      else
       self._disableLayer(layer.ID);
-      list += '<li class="layer-item" data-layer="' + layer.ID + '" ' + attrs + '>';
-      list += '<div class="layer-status"/><h2>' + layer.title + '</h2>';
-      list += '<p>'+ layer.content +'</p>';
-      list += '<div class="toggles">'
-      if (layer.legend)
-       list += '<a href="#">Show legend</a>';
-      list += '</div>'
-      if (layer.legend)
-       list += '<div class="legend">'+layer.legend+'</div>'
-      list += '</li>';
+
+     var status = self._getStatus(layer.ID).on ? " active" : "";
+     list += '<li class="layer-item" data-layer="' + layer.ID + '" ' + attrs + '>';
+     list += '<div class="layer-status'+status+'"/><h2 class="'+status+'">' + layer.title + '</h2>';
+     list += '<p>'+ layer.excerpt +'</p>';
+     list += '<div class="toggles">'
+     if (layer.legend)
+      list += '<a href="#">Show legend</a>';
+     list += '</div>'
+     if (layer.legend)
+      list += '<div class="legend">'+layer.legend+'</div>'
+     list += '</li>';
     });
 
     this._swapWidget = '<ul class="swap-layers">' + list + '</ul>';
@@ -90,12 +93,16 @@
       attrs = '';
       self._disableLayer(layer.ID);
      }
+     self._enableLayer(layer.ID);
+     var status = self._getStatus(layer.ID).on ? " active" : "";
      list += '<li class="layer-item" data-layer="' + layer.ID + '" ' + attrs + '>';
-     list += '<div class="layer-status"/><h2>' + layer.title + '</h2>';
-     list += '<p>'+ layer.content +'</p>';
+     list += '<div class="layer-status'+status+'"/><h2 class="'+status+'">' + layer.title + '</h2>';
+     list += '<p class="layer-excerpt">'+ layer.excerpt +'</p>';
+     list += '<p class="layer-content">'+ layer.content +'</p>';
      list += '<div class="toggles">'
+     list += '<a class="toggle-text" href="#">More</a>';
      if (layer.legend)
-      list += '<a href="#">Show legend</a>';
+      list += '<a class="toggle-legend" href="#">Show legend</a>';
      list += '</div>'
      if (layer.legend)
       list += '<div class="legend">'+layer.legend+'</div>'

@@ -41,7 +41,7 @@ class JEO_Layers {
    'labels' => $labels,
    'hierarchical' => true,
    'description' => __('JEO Layers', 'jeo'),
-   'supports' => array('title','editor'),
+   'supports' => array('title','editor', 'excerpt'),
    'rewrite' => array('slug' => 'layers'),
    'public' => true,
    'show_in_menu' => false,
@@ -703,6 +703,7 @@ class JEO_Layers {
    'ID' => $post->ID,
    'title' => get_the_title(),
    'post_content' => get_the_content(),
+   'excerpt' => get_the_excerpt(),
    'type' => $type,
    'legend' => get_post_meta($post->ID, '_layer_legend', true)
   );
