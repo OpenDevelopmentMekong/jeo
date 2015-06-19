@@ -60,17 +60,20 @@
      else
       self._disableLayer(layer.ID);
 
-     var status = self._getStatus(layer.ID).on ? " active" : "";
-     list += '<li class="layer-item" data-layer="' + layer.ID + '" ' + attrs + '>';
-     list += '<div class="layer-status'+status+'"/><h2 class="'+status+'">' + layer.title + '</h2>';
-     list += '<p>'+ layer.excerpt +'</p>';
-     list += '<div class="toggles">'
-     if (layer.legend)
-      list += '<a href="#">Show legend</a>';
-     list += '</div>'
-     if (layer.legend)
-      list += '<div class="legend">'+layer.legend+'</div>'
-     list += '</li>';
+      var status = self._getStatus(layer.ID).on ? " active" : "";
+      list += '<li class="layer-item" data-layer="' + layer.ID + '" ' + attrs + '>';
+      list += '<div class="layer-status'+status+'"/><h2 class="'+status+'">' + layer.title + '</h2>';
+      list += '<div class="toggles">'
+      if (layer.content)
+       list += '<a class="toggle-text" href="#">More</a>';
+      if (layer.legend)
+       list += '<a class="toggle-legend" href="#">Show legend</a>';
+      list += '</div>'
+      if (layer.legend)
+       list += '<div class="legend">'+layer.legend+'</div>'
+      list += '<div class="layer-excerpt">'+ layer.excerpt +'</div>';
+      list += '<div class="layer-content">'+ layer.content +'</div>';
+      list += '</li>';
     });
 
     this._swapWidget = '<ul class="swap-layers">' + list + '</ul>';
@@ -94,11 +97,10 @@
       self._disableLayer(layer.ID);
      }
      self._enableLayer(layer.ID);
+
      var status = self._getStatus(layer.ID).on ? " active" : "";
      list += '<li class="layer-item" data-layer="' + layer.ID + '" ' + attrs + '>';
      list += '<div class="layer-status'+status+'"/><h2 class="'+status+'">' + layer.title + '</h2>';
-     list += '<p class="layer-excerpt">'+ layer.excerpt +'</p>';
-     list += '<p class="layer-content">'+ layer.content +'</p>';
      list += '<div class="toggles">'
      if (layer.content)
       list += '<a class="toggle-text" href="#">More</a>';
@@ -107,6 +109,8 @@
      list += '</div>'
      if (layer.legend)
       list += '<div class="legend">'+layer.legend+'</div>'
+     list += '<div class="layer-excerpt">'+ layer.excerpt +'</div>';
+     list += '<div class="layer-content">'+ layer.content +'</div>';
      list += '</li>';
     });
 
