@@ -702,8 +702,8 @@ class JEO_Layers {
   $layer = array(
    'ID' => $post->ID,
    'title' => get_the_title(),
-   'post_content' => get_the_content(),
-   'excerpt' => get_the_excerpt(),
+   'post_content' => content(999),
+   'excerpt' => content(40),
    'type' => $type,
    'legend' => get_post_meta($post->ID, '_layer_legend', true)
   );
