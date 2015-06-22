@@ -272,6 +272,7 @@ var jeo = {};
      title: layer.title,
      content: layer.post_content,
      excerpt: layer.excerpt,
+     download: layer.download_url,
      legend: layer.legend
     };
     if(layer.hidden)

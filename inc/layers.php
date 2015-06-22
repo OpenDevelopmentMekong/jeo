@@ -125,9 +125,22 @@ class JEO_Layers {
  function settings_box($post = false) {
 
   $layer_type = $post ? $this->get_layer_type($post->ID) : false;
+  $layer_download_link = get_post_meta($post->ID, '_layer_download_link', true);
 
   ?>
   <div id="layer_settings_box">
+   <div class="layer-download-link">
+    <tbody>
+     <tr>
+      <th><label for="_layer_download_link"><?php _e('Download URL', 'jeo'); ?></label></th>
+      <td>
+       <input id="_layer_download_link" type="text" placeholder="https://" size="40" name="_layer_download_link" value="<?php echo $layer_download_link; ?>" />
+       <p class="description"><?php _e('A link to a dataset\'s page on CKAN', 'jeo'); ?></p>
+      </td>
+     </tr>
+    </tbody>
+   </div>
+
    <div class="layer-type">
     <h4><?php _e('Layer type', 'jeo'); ?></h4>
     <p>
@@ -342,6 +355,12 @@ class JEO_Layers {
 
    if (false !== wp_is_post_revision($post_id))
     return;
+
+   /*
+    * Download URL
+    */
+    if(isset($_REQUEST['_layer_download_link']))
+     update_post_meta($post_id, '_layer_download_link', $_REQUEST['_layer_download_link']);
 
    /*
     * Layer legend
@@ -704,6 +723,7 @@ class JEO_Layers {
    'title' => get_the_title(),
    'post_content' => content(999),
    'excerpt' => content(40),
+   'download_url' => get_post_meta($post->ID, '_layer_download_link', true),
    'type' => $type,
    'legend' => get_post_meta($post->ID, '_layer_legend', true)
   );

@@ -30,9 +30,10 @@
    _.each(this._map.conf.layers, function(layer) {
     self._layers.status.push({
      ID: layer.ID,
-     content: layer.content,
+     content: layer.post_content,
      excerpt: layer.excerpt,
      legend: layer.legend,
+     download: layer.download_url,
      on: true
     });
    });
@@ -64,10 +65,12 @@
       list += '<li class="layer-item" data-layer="' + layer.ID + '" ' + attrs + '>';
       list += '<div class="layer-status'+status+'"/><h2 class="'+status+'">' + layer.title + '</h2>';
       list += '<div class="toggles">'
-      if (layer.content)
+      if (layer.content.length != layer.excerpt.length)
        list += '<a class="toggle-text" href="#">More</a>';
       if (layer.legend)
        list += '<a class="toggle-legend" href="#">Show legend</a>';
+      if (layer.download)
+       list += '<a class="download-url" target="_blank" href="'+layer.download+'">Download</a>';
       list += '</div>'
       if (layer.legend)
        list += '<div class="legend">'+layer.legend+'</div>'
@@ -98,14 +101,18 @@
      }
      self._enableLayer(layer.ID);
 
+     console.log(layer);
+
      var status = self._getStatus(layer.ID).on ? " active" : "";
      list += '<li class="layer-item" data-layer="' + layer.ID + '" ' + attrs + '>';
      list += '<div class="layer-status'+status+'"/><h2 class="'+status+'">' + layer.title + '</h2>';
      list += '<div class="toggles">'
-     if (layer.content)
+     if (layer.content.length != layer.excerpt.length)
       list += '<a class="toggle-text" href="#">More</a>';
      if (layer.legend)
       list += '<a class="toggle-legend" href="#">Show legend</a>';
+     if (layer.download)
+      list += '<a class="download-url" target="_blank" href="'+layer.download+'">Download</a>';
      list += '</div>'
      if (layer.legend)
       list += '<div class="legend">'+layer.legend+'</div>'
