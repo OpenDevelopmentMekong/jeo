@@ -75,7 +75,7 @@ add_action('wp_enqueue_scripts', 'jeo_enqueue_theme_scripts', 12);
 
 function jeo_flush_rewrite() {
  global $pagenow;
- if(is_admin() && $_REQUEST['activated'] && $pagenow == 'themes.php') {
+ if(is_admin() && in_array('activated',$_REQUEST) && $_REQUEST['activated'] && $pagenow == 'themes.php') {
   global $wp_rewrite;
   $wp_rewrite->init();
   $wp_rewrite->flush_rules();
