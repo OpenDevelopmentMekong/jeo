@@ -239,10 +239,13 @@ class JEO {
 		$this->mapped_post_types = $custom + array('post');
 		unset($this->mapped_post_types['map']);
 		unset($this->mapped_post_types['map-layer']);
-		unset($this->mapped_post_types['map-group']);
+		unset($this->mapped_post_types['map-group']);  
+        unset($this->mapped_post_types['rssmi_feed']);
+        unset($this->mapped_post_types['rssmi_feed_item']);
+        unset($this->mapped_post_types['site-update']);
 		return apply_filters('jeo_mapped_post_types', $this->mapped_post_types);
 	}
-
+      
 	function setup_query() {
 		if($this->use_the_query()) {
 			add_filter('query_vars', array($this, 'query_vars'));
