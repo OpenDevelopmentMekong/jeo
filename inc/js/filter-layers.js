@@ -98,10 +98,9 @@
      if(layer.hidden) {
       attrs = '';
       self._disableLayer(layer.ID);
+     }else{
+      self._enableLayer(layer.ID);
      }
-     self._enableLayer(layer.ID);
-
-     console.log(layer);
 
      var status = self._getStatus(layer.ID).on ? " active" : "";
      list += '<li class="layer-item" data-layer="' + layer.ID + '" ' + attrs + '>';
