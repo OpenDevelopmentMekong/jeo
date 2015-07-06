@@ -101,7 +101,7 @@ var jeo = {};
    map.postID = conf.postID;
 
   // layers
-  jeo.loadLayers(map, jeo.parseLayers(map, conf.layers));
+  //jeo.loadLayers(map, jeo.parseLayers(map, conf.layers));
 
   // set bounds
   if(conf.fitBounds instanceof L.LatLngBounds)
