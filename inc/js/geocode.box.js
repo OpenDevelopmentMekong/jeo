@@ -400,7 +400,7 @@ var geocodeBox;
 					format: 'json'
 				};
 
-				$.getJSON('http://nominatim.openstreetmap.org/search.php?json_callback=?', query, function(results) {
+				$.getJSON('https://nominatim.openstreetmap.org/search.php?json_callback=?', query, function(results) {
 
 					_results(results, 'display_name', 'lat', 'lon', 'boundingbox');
 
