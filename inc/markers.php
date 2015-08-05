@@ -171,7 +171,7 @@ class JEO_Markers {
 	function query() {
 		global $wp_query;
 		
-	    if ( is_home() ) {
+	    if (is_home()) {
     		$marker_query = apply_filters('jeo_marker_base_query', $wp_query);
     
     		$query = $marker_query->query_vars;
