@@ -142,7 +142,7 @@ class JEO_Markers {
 		wp_register_script('leaflet-markerclusterer', get_template_directory_uri() . '/lib/leaflet/leaflet.markercluster.js', array('jeo'), '0.2');
 		wp_register_style('leaflet-markerclusterer', get_template_directory_uri() . '/lib/leaflet/MarkerCluster.Default.css', array(), '0.2');
 
-		/* 
+		/*
 		 * Clustering
 		 */
 		if($this->use_clustering()) {
@@ -169,64 +169,58 @@ class JEO_Markers {
 	}
 
 	function query() {
-		global $wp_query;
+		global $wp_query; 
 		
-	    if (is_front_page()) {
-    		$marker_query = apply_filters('jeo_marker_base_query', $wp_query);
-    
-    		$query = $marker_query->query_vars;
-    
-    		if(isset($query['suppress_filters']))
-    			unset($query['suppress_filters']);
-    
-    		if(is_singular(array('map', 'map-group'))) {
-    			global $post;
-    			$marker_query = apply_filters('jeo_marker_base_query', new WP_Query());
-    			$marker_query->parse_query();
-    			$query = $marker_query->query_vars;
-    			$query['map_id'] = $post->ID;
-    			unset($query['page_id']);
-    		}
-    
-    		if($wp_query->get('map_id') && !$wp_query->get('p')) {
-    			$query['map_id'] = $wp_query->get('map_id');
-    		}
-    
-    		if(!$query['post_type'])
-    			$query['post_type'] = jeo_get_mapped_post_types();
-    
-    		$query['post_status'] = 'publish';
-    
-    		$markers_limit = $this->get_limit();
-    		$query['posts_per_page'] = $markers_limit;
-    		if($markers_limit != -1) {
-    			$amount = $marker_query->found_posts;
-    			if($markers_limit > $amount) {
-    				$markers_limit = $amount;
-    			} else {
-    				$page = (get_query_var('paged')) ? get_query_var('paged') : 1;
-    				$offset = get_query_var('posts_per_page') * ($page - 1);
-    				if($offset <= ($amount - $markers_limit)) {
-    					if($offset !== 0) $offset = $offset - 1;
-    					$query['offset'] = $offset;
-    				} else {
-    					$query['offset'] = $amount - $markers_limit;
-    				}
-    			}
-    		}
-    
-    		// add search
-    		if(isset($_GET['s']))
-    			$query['s'] = $_GET['s'];
-    
-    		$query['paged'] = (get_query_var('paged')) ? get_query_var('paged') : 1;
-    
-    		return apply_filters('jeo_marker_query', $query);
-    	}//end if home
-    	else{
-    	   $query ="";
-           return $query;
-        }
+		$marker_query = apply_filters('jeo_marker_base_query', $wp_query);
+
+		$query = $marker_query->query_vars;
+
+		if(isset($query['suppress_filters']))
+			unset($query['suppress_filters']);
+
+		if(is_singular(array('map', 'map-group'))) {
+			global $post;
+			$marker_query = apply_filters('jeo_marker_base_query', new WP_Query());
+			$marker_query->parse_query();
+			$query = $marker_query->query_vars;
+			$query['map_id'] = $post->ID;
+			unset($query['page_id']);
+		}
+
+		if($wp_query->get('map_id') && !$wp_query->get('p')) {
+			$query['map_id'] = $wp_query->get('map_id');
+		}
+
+		if(!$query['post_type'])
+			$query['post_type'] = jeo_get_mapped_post_types();
+
+		$query['post_status'] = 'publish';
+
+		$markers_limit = $this->get_limit();
+		$query['posts_per_page'] = $markers_limit;
+		if($markers_limit != -1) {
+			$amount = $marker_query->found_posts;
+			if($markers_limit > $amount) {
+				$markers_limit = $amount;
+			} else {
+				$page = (get_query_var('paged')) ? get_query_var('paged') : 1;
+				$offset = get_query_var('posts_per_page') * ($page - 1);
+				if($offset <= ($amount - $markers_limit)) {
+					if($offset !== 0) $offset = $offset - 1;
+					$query['offset'] = $offset;
+				} else {
+					$query['offset'] = $amount - $markers_limit;
+				}
+			}
+		}
+
+		// add search
+		if(isset($_GET['s']))
+			$query['s'] = $_GET['s'];
+
+		$query['paged'] = (get_query_var('paged')) ? get_query_var('paged') : 1;
+
+		return apply_filters('jeo_marker_query', $query); 
 	}
 
 	function setup_post_map() {
@@ -257,8 +251,7 @@ class JEO_Markers {
 		add_action('wp_ajax_markers_geojson', array($this, 'get_data'));
 	}
 
-	function get_data($query = false) {
-
+	function get_data($query = false) { 
 		$query = $query ? $query : $_REQUEST['query'];
 
 		if(!isset($query['singular_map']) || $query['singular_map'] !== true) {
