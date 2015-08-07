@@ -239,10 +239,13 @@ class JEO {
 		$this->mapped_post_types = $custom + array('post');
 		unset($this->mapped_post_types['map']);
 		unset($this->mapped_post_types['map-layer']);
-		unset($this->mapped_post_types['map-group']);  
+		unset($this->mapped_post_types['map-group']);
         unset($this->mapped_post_types['rssmi_feed']);
         unset($this->mapped_post_types['rssmi_feed_item']);
         unset($this->mapped_post_types['site-update']);
+        unset($this->mapped_post_types['tablepress_table']);
+        unset($this->mapped_post_types['fa_slider']);
+        unset($this->mapped_post_types['wp-feature-box']);
 		return apply_filters('jeo_mapped_post_types', $this->mapped_post_types);
 	}
       
