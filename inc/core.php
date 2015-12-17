@@ -100,9 +100,14 @@ class JEO {
 
 		} else {
 
-			//wp_register_script('leaflet', get_template_directory_uri() . '/lib/leaflet/leaflet.js', array(), '0.7.3');   
-			wp_register_script('leaflet', get_stylesheet_directory_uri() . '/lib/leaflet/leaflet.js', array(), '0.7.7');
-            wp_enqueue_style('leaflet', get_template_directory_uri() . '/lib/leaflet/leaflet.css');
+			//wp_register_script('leaflet', get_template_directory_uri() . '/lib/leaflet/leaflet.js', array(), '0.7.3');
+
+		      if ( file_exists( STYLESHEETPATH . '/lib/leaflet/leaflet.js')) {
+			    wp_register_script('leaflet', get_stylesheet_directory_uri() . '/lib/leaflet/leaflet.js', array(), '0.7.7');
+			  }else{
+			    wp_register_script('leaflet', get_template_directory_uri() . '/lib/leaflet/leaflet.js', array(), '0.7.3');
+			  }
+                wp_enqueue_style('leaflet', get_template_directory_uri() . '/lib/leaflet/leaflet.css');
 
 		}
 
@@ -121,9 +126,10 @@ class JEO {
 		 * Local
 		 */
 		//
-		//Points to child theme       
+		//Points to child theme
 		if ( file_exists( STYLESHEETPATH . '/inc/js/jeo.js')) {
            wp_enqueue_script('jeo', get_stylesheet_directory_uri() . '/inc/js/jeo.js', array('mapbox-js', 'underscore', 'jquery'), '0.5.0');
+           wp_enqueue_style('leaflet', get_stylesheet_directory_uri() . '/lib/leaflet/leaflet.css');
         } else {
             wp_enqueue_script('jeo', get_template_directory_uri() . '/inc/js/jeo.js', array('mapbox-js', 'underscore', 'jquery'), '0.4.3');
         }
@@ -255,7 +261,7 @@ class JEO {
         unset($this->mapped_post_types['wp-feature-box']);
 		return apply_filters('jeo_mapped_post_types', $this->mapped_post_types);
 	}
-      
+
 	function setup_query() {
 		if($this->use_the_query()) {
 			add_filter('query_vars', array($this, 'query_vars'));
