@@ -1,0 +1,13 @@
+{
+  "uploadOnSave": true,
+  "deleteLocal": false,
+  "hostname": "192.168.33.10",
+  "target": "/home/vagrant/webapps/wp/wp-content/themes/jeo",
+  "ignore": [
+    ".remote-sync.json",
+    ".git/**"
+  ],
+  "username": "vagrant",
+  "useAgent": true,
+  "transport": "scp"
+}
