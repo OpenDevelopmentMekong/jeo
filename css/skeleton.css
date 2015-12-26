@@ -1,1 +1,45 @@
 /**/
+.container{
+  width: 1180px;
+}
+.container { position: relative; width: 960px; margin: 0 auto; padding: 0; }
+.column, .columns { float: left; display: inline; margin-left: 10px; margin-right: 10px; }
+.row { margin-bottom: 20px; }
+
+/* Nested Column Classes */
+.column.alpha, .columns.alpha                       { margin-left: 0; }
+.column.omega, .columns.omega                       { margin-right: 0; }
+
+.container .one-third.column                        { width: 300px; }
+.container .two-thirds.column                       { width: 620px; }
+
+/*****************************
+    12 Column
+*****************************/
+
+/* Base Grid */
+.container .one.column                       { width: 60px;  }
+.container .two.columns                      { width: 140px; }
+.container .three.columns                    { width: 220px; }
+.container .four.columns                     { width: 300px; }
+.container .five.columns                     { width: 380px; }
+.container .six.columns                      { width: 460px; }
+.container .seven.columns                    { width: 540px; }
+.container .eight.columns                    { width: 620px; }
+.container .nine.columns                     { width: 700px; }
+.container .ten.columns                      { width: 780px; }
+.container .eleven.columns                   { width: 860px; }
+.container .twelve.columns                   { width: 940px; }
+
+/* Offsets */
+.container .offset-by-one                    { margin-left: 80px;  }
+.container .offset-by-two                    { margin-left: 170px; }
+.container .offset-by-three                  { margin-left: 250px; }
+.container .offset-by-four                   { margin-left: 330px; }
+.container .offset-by-five                   { margin-left: 410px; }
+.container .offset-by-six                    { margin-left: 490px; }
+.container .offset-by-seven                  { margin-left: 570px; }
+.container .offset-by-eight                  { margin-left: 650px; }
+.container .offset-by-nine                   { margin-left: 730px; }
+.container .offset-by-ten                    { margin-left: 810px; }
+.container .offset-by-eleven                 { margin-left: 890px; }
