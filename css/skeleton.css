@@ -29,7 +29,7 @@
 .container .nine.columns                     { width: 700px; }
 .container .ten.columns                      { width: 780px; }
 .container .eleven.columns                   { width: 860px; }
-.container .twelve.columns                   { width: 940px; }
+.container .twelve.columns                   { width: 960px; }
 
 /* Offsets */
 .container .offset-by-one                    { margin-left: 80px;  }
@@ -43,3 +43,61 @@
 .container .offset-by-nine                   { margin-left: 730px; }
 .container .offset-by-ten                    { margin-left: 810px; }
 .container .offset-by-eleven                 { margin-left: 890px; }
+
+
+@media only screen and (min-width: 1360px) {
+
+    .container { position: relative; width: 1200px; margin: 0 auto; padding: 0; }
+
+    /*****************************
+        12 Column
+    *****************************/
+
+    /* Base Grid */
+    .container .one.column                       { width: 60px;  }
+    .container .two.columns                      { width: 160px; }
+    .container .three.columns                    { width: 260px; }
+    .container .four.columns                     { width: 360px; }
+    .container .five.columns                     { width: 460px; }
+    .container .six.columns                      { width: 560px; }
+    .container .seven.columns                    { width: 660px; }
+    .container .eight.columns                    { width: 760px; }
+    .container .nine.columns                     { width: 860px; }
+    .container .ten.columns                      { width: 960px; }
+    .container .eleven.columns                   { width: 1060px; }
+    /*modified*/
+    .container .twelve.columns                   { width: 1170px; }
+
+}
+
+@media only screen and (min-width: 960px) and (max-width: 1359px) {
+
+  .container .twelve.columns{ width: 960px; }
+  .container { position: relative; width: 960px; margin: 0 auto; padding: 0; }
+}
+
+
+
+@media only screen and (min-width: 768px) and (max-width: 959px) {
+    .container { width: 1020px; }
+
+    /*****************************
+        12 Column
+        ((768/12) - 20) * 1 = 44
+    *****************************/
+
+    .container .one.column                   { width: 44px;  }
+    .container .two.columns                  { width: 108px; }
+    .container .three.columns                { width: 172px; }
+    .container .four.columns                 { width: 236px; }
+    .container .five.columns                 { width: 300px; }
+    .container .six.columns                  { width: 364px; }
+    .container .seven.columns                { width: 428px; }
+    .container .eight.columns                { width: 492px; }
+    .container .nine.columns                 { width: 556px; }
+    .container .ten.columns                  { width: 620px; }
+    .container .eleven.columns               { width: 684px; }
+    .container .twelve.columns               { width: 1050px; }
+
+
+  }
