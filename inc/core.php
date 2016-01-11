@@ -99,17 +99,12 @@ class JEO {
 			wp_enqueue_style('cartodb', get_template_directory_uri() . '/lib/cartodb.css');
 
 		} else {
-
 			//wp_register_script('leaflet', get_template_directory_uri() . '/lib/leaflet/leaflet.js', array(), '0.7.3');
-
-		      if ( file_exists( STYLESHEETPATH . '/lib/leaflet/leaflet.js')) {
-			    wp_register_script('leaflet', get_stylesheet_directory_uri() . '/lib/leaflet/leaflet.js', array(), '0.7.7');
-			  }else{
-			    wp_register_script('leaflet', get_template_directory_uri() . '/lib/leaflet/leaflet.js', array(), '0.7.3');
-			  }
-                wp_enqueue_style('leaflet', get_template_directory_uri() . '/lib/leaflet/leaflet.css');
+			wp_register_script('leaflet', get_stylesheet_directory_uri() . '/lib/leaflet/leaflet.js', array(), '0.7.7');
+            wp_enqueue_style('leaflet', get_template_directory_uri() . '/lib/leaflet/leaflet.css');
 
 		}
+
 
 		wp_register_style('leaflet-ie', get_template_directory_uri() . '/lib/leaflet/leaflet.ie.css');
 		$GLOBALS['wp_styles']->add_data('leaflet-ie', 'conditional', 'lte IE 8');
