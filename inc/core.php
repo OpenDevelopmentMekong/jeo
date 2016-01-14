@@ -123,11 +123,11 @@ class JEO {
 		//
 		//Points to child theme
 		if ( file_exists( STYLESHEETPATH . '/inc/js/jeo.js')) {
-           wp_enqueue_script('jeo', get_stylesheet_directory_uri() . '/inc/js/jeo.js', array('mapbox-js', 'underscore', 'jquery'), '0.5.0');
-           wp_enqueue_style('leaflet', get_stylesheet_directory_uri() . '/lib/leaflet/leaflet.css');
-        } else {
-            wp_enqueue_script('jeo', get_template_directory_uri() . '/inc/js/jeo.js', array('mapbox-js', 'underscore', 'jquery'), '0.4.3');
-        }
+      wp_enqueue_script('jeo', get_stylesheet_directory_uri() . '/inc/js/jeo.js', array('mapbox-js', 'underscore', 'jquery'), '0.5.0');
+      wp_enqueue_style('leaflet', get_stylesheet_directory_uri() . '/lib/leaflet/leaflet.css');
+    } else {
+      wp_enqueue_script('jeo', get_template_directory_uri() . '/inc/js/jeo.js', array('mapbox-js', 'underscore', 'jquery'), '0.4.3');
+    }
 
 		wp_enqueue_script('jeo.groups', get_template_directory_uri() . '/inc/js/groups.js', array('jeo'), '0.2.7');
 
