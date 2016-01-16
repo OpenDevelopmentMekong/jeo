@@ -66,7 +66,7 @@
       list += '<div class="layer-status'+status+'"/><h2 class="'+status+'">' + layer.title + '</h2>';
       list += '<div class="toggles">'
       if (layer.content.length != layer.excerpt.length)
-       list += '<a class="toggle-text" href="#">More</a>';
+       list += '<a class="toggle-text icon-info" href="#">More</a>';
       if (layer.legend)
        list += '<a class="toggle-legend" href="#">Show legend</a>';
       if (layer.download)
