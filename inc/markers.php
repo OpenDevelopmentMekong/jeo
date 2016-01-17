@@ -142,7 +142,7 @@ class JEO_Markers {
 		wp_register_script('leaflet-markerclusterer', get_template_directory_uri() . '/lib/leaflet/leaflet.markercluster.js', array('jeo'), '0.2');
 		wp_register_style('leaflet-markerclusterer', get_template_directory_uri() . '/lib/leaflet/MarkerCluster.Default.css', array(), '0.2');
 
-		/* 
+		/*
 		 * Clustering
 		 */
 		if($this->use_clustering()) {
@@ -169,7 +169,8 @@ class JEO_Markers {
 	}
 
 	function query() {
-		global $wp_query;
+		global $wp_query; 
+		
 		$marker_query = apply_filters('jeo_marker_base_query', $wp_query);
 
 		$query = $marker_query->query_vars;
@@ -219,7 +220,7 @@ class JEO_Markers {
 
 		$query['paged'] = (get_query_var('paged')) ? get_query_var('paged') : 1;
 
-		return apply_filters('jeo_marker_query', $query);
+		return apply_filters('jeo_marker_query', $query); 
 	}
 
 	function setup_post_map() {
@@ -250,8 +251,7 @@ class JEO_Markers {
 		add_action('wp_ajax_markers_geojson', array($this, 'get_data'));
 	}
 
-	function get_data($query = false) {
-
+	function get_data($query = false) { 
 		$query = $query ? $query : $_REQUEST['query'];
 
 		if(!isset($query['singular_map']) || $query['singular_map'] !== true) {
