@@ -64,18 +64,20 @@
       var status = self._getStatus(layer.ID).on ? " active" : "";
       list += '<li class="layer-item" data-layer="' + layer.ID + '" ' + attrs + '>';
       list += '<div class="layer-status'+status+'"/><h2 class="'+status+'">' + layer.title + '</h2>';
-      list += '<div class="toggles">'
-      if (layer.content.length != layer.excerpt.length)
-       list += '<a class="toggle-text" alt="More" href="#"><svg class="icon-info" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="512" height="512" viewBox="0 0 512 512"><path class="icon-info-path" d="M224 152c0-13.2 10.8-24 24-24h16c13.2 0 24 10.8 24 24v16c0 13.2-10.8 24-24 24h-16c-13.2 0-24-10.8-24-24v-16z"></path><path class="icon-info-path" d="M320 384h-128v-32h32v-96h-32v-32h96v128h32z"></path><path class="icon-info-path" d="M256 0c-141.385 0-256 114.615-256 256s114.615 256 256 256 256-114.615 256-256-114.615-256-256-256zM256 464c-114.875 0-208-93.125-208-208s93.125-208 208-208 208 93.125 208 208-93.125 208-208 208z"></path></svg></a>';
-      if (layer.legend)
-       list += '<a class="toggle-legend" href="#">Show legend</a>';
       if (layer.download)
        list += '<a class="download-url" target="_blank" href="'+layer.download+'">Download</a>';
+      list += '<a class="toggle-info" alt="Info" href="#"><svg class="icon-info" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="512" height="512" viewBox="0 0 512 512"><path class="icon-info-path" d="M224 152c0-13.2 10.8-24 24-24h16c13.2 0 24 10.8 24 24v16c0 13.2-10.8 24-24 24h-16c-13.2 0-24-10.8-24-24v-16z"></path><path class="icon-info-path" d="M320 384h-128v-32h32v-96h-32v-32h96v128h32z"></path><path class="icon-info-path" d="M256 0c-141.385 0-256 114.615-256 256s114.615 256 256 256 256-114.615 256-256-114.615-256-256-256zM256 464c-114.875 0-208-93.125-208-208s93.125-208 208-208 208 93.125 208 208-93.125 208-208 208z"></path></svg></a>';
+      list += '<div class="toggles">'
+      // if (layer.content.length != layer.excerpt.length)
+      //  list += '<a class="toggle-text" alt="More" href="#">More</a>';
+      if (layer.legend)
+       list += '<a class="toggle-legend" href="#">Show legend</a>';
       list += '</div>'
       if (layer.legend)
        list += '<div class="legend">'+layer.legend+'</div>'
       list += '<div class="layer-excerpt">'+ layer.excerpt +'</div>';
       list += '<div class="layer-content">'+ layer.content +'</div>';
+      list += '<div class="clearfix"></div>'
       list += '</li>';
     });
 
@@ -105,18 +107,20 @@
      var status = self._getStatus(layer.ID).on ? " active" : "";
      list += '<li class="layer-item" data-layer="' + layer.ID + '" ' + attrs + '>';
      list += '<div class="layer-status'+status+'"/><h2 class="'+status+'">' + layer.title + '</h2>';
-     list += '<div class="toggles">'
-     if (layer.content.length != layer.excerpt.length)
-       list += '<a class="toggle-text" alt="More" href="#"><svg class="icon-info" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="512" height="512" viewBox="0 0 512 512"><path class="icon-info-path" d="M224 152c0-13.2 10.8-24 24-24h16c13.2 0 24 10.8 24 24v16c0 13.2-10.8 24-24 24h-16c-13.2 0-24-10.8-24-24v-16z"></path><path class="icon-info-path" d="M320 384h-128v-32h32v-96h-32v-32h96v128h32z"></path><path class="icon-info-path" d="M256 0c-141.385 0-256 114.615-256 256s114.615 256 256 256 256-114.615 256-256-114.615-256-256-256zM256 464c-114.875 0-208-93.125-208-208s93.125-208 208-208 208 93.125 208 208-93.125 208-208 208z"></path></svg></a>';
-     if (layer.legend)
-      list += '<a class="toggle-legend" href="#">Show legend</a>';
      if (layer.download)
       list += '<a class="download-url" target="_blank" href="'+layer.download+'">Download</a>';
+     list += '<a class="toggle-info" alt="Info" href="#"><svg class="icon-info" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="512" height="512" viewBox="0 0 512 512"><path class="icon-info-path" d="M224 152c0-13.2 10.8-24 24-24h16c13.2 0 24 10.8 24 24v16c0 13.2-10.8 24-24 24h-16c-13.2 0-24-10.8-24-24v-16z"></path><path class="icon-info-path" d="M320 384h-128v-32h32v-96h-32v-32h96v128h32z"></path><path class="icon-info-path" d="M256 0c-141.385 0-256 114.615-256 256s114.615 256 256 256 256-114.615 256-256-114.615-256-256-256zM256 464c-114.875 0-208-93.125-208-208s93.125-208 208-208 208 93.125 208 208-93.125 208-208 208z"></path></svg></a>';
+     list += '<div class="toggles">'
+    //  if (layer.content.length != layer.excerpt.length)
+    //    list += '<a class="toggle-text" alt="More" href="#">More</a>';
+     if (layer.legend)
+      list += '<a class="toggle-legend" href="#">Show legend</a>';
      list += '</div>'
      if (layer.legend)
       list += '<div class="legend">'+layer.legend+'</div>'
      list += '<div class="layer-excerpt">'+ layer.excerpt +'</div>';
      list += '<div class="layer-content">'+ layer.content +'</div>';
+     list += '<div class="clearfix"></div>'
      list += '</li>';
     });
 
