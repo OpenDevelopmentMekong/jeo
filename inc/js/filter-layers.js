@@ -74,7 +74,7 @@
        list += '<a class="toggle-legend" href="#">Show legend</a>';
       list += '</div>'
       if (layer.legend)
-       list += '<div class="legend">'+layer.legend+'</div>'
+       list += '<div class="legend">'+layer.legend+'</div>';
       list += '<div class="layer-excerpt">'+ layer.excerpt +'</div>';
       list += '<div class="layer-content">'+ layer.content +'</div>';
       list += '<div class="clearfix"></div>'
