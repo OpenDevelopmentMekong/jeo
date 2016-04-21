@@ -43,6 +43,16 @@ After setting your first map, go to the bottom of your dashboard's menu and clic
 
 Now you can go manage your posts, geolocate them and add custom marker icons!
 
+## Testing
+
+Tests are found on ckanext/odm_dataset/tests and can be run with ```phpunit tests```
+
+## Continuous deployment
+
+Everytime code is pushed to the repository, travis will run the tests available on **/tests**. In case the code has been pushed to **master** branch and tests pass, the **_ci/deploy.sh** script will be called for deploying code in CKAN's DEV instance. Analog to this, and when code from **master** branch has been **tagged as release**, travis will deploy to CKAN's PROD instance automatically.
+
+For the automatic deployment, the scripts on **_ci/** are responsible of downloading the odm-automation repository, decrypting the **odm_tech_rsa.enc** private key file ( encrypted using Travis-ci encryption mechanism) and triggering deployment in either DEV or PROD environment.
+
 ### Authors and Contributors
 
 JEO is a collaboration between [@oeco](https://github.com/oeco/), [@cardume](https://github.com/cardume/), [@memelab](https://github.com/memelab/) and [@icfjknight](https://github.com/icfjknight/). Developed after the theme was built for [InfoAmazonia](http://infoamazonia.org/), a project led by ICFJ Knight International Journalism Fellow [Gustavo Faleiros](http://www.icfj.org/our-work/brazil-expand-use-satellite-mapping-and-other-technologies-improve-environmental-reporting) and supported by [Internews](http://www.internews.org/).
