@@ -1,19 +1,6 @@
 <?php
 
-add_action('add_meta_boxes', 'map_relation_add_meta_box');
 add_action('save_post', 'map_relation_save_postdata');
-
-$screen = array('post', 'mekong-floods');
-function map_relation_add_meta_box() {
-	add_meta_box(
-		'map_relation',
-		__('Set maps for this post', 'jeo'),
-		'map_relation_inner_custom_box',
-		$screen,
-		'advanced',
-		'high'
-	);
-}
 
 function map_relation_inner_custom_box($post) {
 	$post_maps = get_post_meta($post->ID, 'maps');
