@@ -94,17 +94,12 @@ class JEO {
 		// }
 
 		if($cartodb || is_admin()) {
-
 			wp_register_script('leaflet', get_template_directory_uri() . '/lib/cartodb.js', array(), '3.11.26');
 			wp_enqueue_style('cartodb', get_template_directory_uri() . '/lib/cartodb.css');
-
 		} else {
-			//wp_register_script('leaflet', get_template_directory_uri() . '/lib/leaflet/leaflet.js', array(), '0.7.3');
-			wp_register_script('leaflet', get_stylesheet_directory_uri() . '/lib/leaflet/leaflet.js', array(), '0.7.7');
+			wp_register_script('leaflet', get_template_directory_uri() . '/lib/leaflet/leaflet.js', array(), '0.7.3');
       wp_enqueue_style('leaflet', get_template_directory_uri() . '/lib/leaflet/leaflet.css');
-
 		}
-
 
 		wp_register_style('leaflet-ie', get_template_directory_uri() . '/lib/leaflet/leaflet.ie.css');
 		$GLOBALS['wp_styles']->add_data('leaflet-ie', 'conditional', 'lte IE 8');
@@ -122,28 +117,18 @@ class JEO {
 		 */
 		//
 	//Points to child theme
-	if ( file_exists( STYLESHEETPATH . '/inc/js/jeo.js')) {
-       wp_enqueue_script('jeo', get_stylesheet_directory_uri() . '/inc/js/jeo.js', array('mapbox-js', 'underscore', 'jquery'), '0.5.0');
-       wp_enqueue_style('leaflet', get_stylesheet_directory_uri() . '/lib/leaflet/leaflet.css'); 
-    } else {
-        wp_enqueue_script('jeo', get_template_directory_uri() . '/inc/js/jeo.js', array('mapbox-js', 'underscore', 'jquery'), '0.4.3');
-    }
+	 	wp_enqueue_script('jeo', get_template_directory_uri() . '/inc/js/jeo.js', array('mapbox-js', 'underscore', 'jquery'), '0.4.3');
+
 
 		wp_enqueue_script('jeo.groups', get_template_directory_uri() . '/inc/js/groups.js', array('jeo'), '0.2.7');
 
 		wp_enqueue_script('jeo.geocode', get_template_directory_uri() . '/inc/js/geocode.js', array('jeo'), '0.0.5');
-		if ( file_exists( STYLESHEETPATH . '/inc/js/fullscreen.js')){
-			wp_enqueue_script('jeo-odm.fullscreen', get_stylesheet_directory_uri() . '/inc/js/fullscreen.js',array('jeo'), '0.2.0');
-		}else {
-			wp_enqueue_script('jeo.fullscreen', get_template_directory_uri() . '/inc/js/fullscreen.js', array('jeo'), '0.0.7');
-		}
 
-		if ( file_exists( STYLESHEETPATH . '/inc/js/filter-layers.js')){
-			wp_enqueue_script('jeo-odm.filterLayers', get_stylesheet_directory_uri() . '/inc/js/filter-layers.js',array('jeo'), '0.2.0');
-		}else {
-			wp_enqueue_script('jeo.filterLayers', get_template_directory_uri() . '/inc/js/filter-layers
+		wp_enqueue_script('jeo.fullscreen', get_template_directory_uri() . '/inc/js/fullscreen.js', array('jeo'), '0.0.7');
+
+		wp_enqueue_script('jeo.filterLayers', get_template_directory_uri() . '/inc/js/filter-layers
 			.js', array('jeo'), '0.1.3');
-		}
+
 		wp_enqueue_script('jeo.ui', get_template_directory_uri() . '/inc/js/ui.js', array('jeo'), '0.0.9');
 		wp_enqueue_style('jeo', get_template_directory_uri() . '/inc/css/jeo.css', array(), '0.0.2');
 
