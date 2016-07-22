@@ -347,11 +347,15 @@ class JEO {
 
 		// hooks
 		$join = apply_filters('jeo_posts_clauses_join', $join, $clauses, $query);
-		$where = apply_filters('jeo_posts_clauses_where', $where, $clauses, $query);
+		if (isset($where)):
+			$where = apply_filters('jeo_posts_clauses_where', $where, $clauses, $query);
+		endif;
 		$groupby = apply_filters('jeo_posts_clauses_groupby', $groupby, $clauses, $query);
 
 		$clauses['join'] .= $join;
-		$clauses['where'] .= $where;
+		if (isset($where)):
+			$clauses['where'] .= $where;
+		endif;
 		$clauses['groupby'] .= $groupby;
 
 		return $clauses;
