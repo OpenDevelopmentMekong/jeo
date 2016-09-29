@@ -94,7 +94,7 @@ class JEO {
 		// }
 
 		if($cartodb || is_admin()) {
-			wp_register_script('leaflet', get_template_directory_uri() . '/lib/cartodb.js', array(), '3.11.26');
+			wp_register_script('leaflet', get_template_directory_uri() . '/lib/cartodb.js', array(), '3.15.10');
 			wp_enqueue_style('cartodb', get_template_directory_uri() . '/lib/cartodb.css');
 		} else {
 			wp_register_script('leaflet', get_template_directory_uri() . '/lib/leaflet/leaflet.js', array(), '0.7.3');
