@@ -2,8 +2,9 @@
 
 	markers = function(map) {
 
-		if(map.conf.disableMarkers || map.conf.admin)
+		if(map.conf.disableMarkers || map.conf.admin || typeof jeo_markers == 'undefined'){
 			return false;
+		}
 
 		$.getJSON(jeo_markers.ajaxurl,
 		{
@@ -47,7 +48,7 @@
 
 				},
 				onEachFeature: function(f, l) {
-					
+
 					var markerId = f.properties.marker.markerId ? f.properties.marker.markerId : f.properties.marker.iconUrl;
 
 					if(icons[markerId]) {
