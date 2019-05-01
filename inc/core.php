@@ -443,6 +443,7 @@ class JEO {
 	function featured($post_type = false) {
 		$post_type = $post_type ? $post_type : $this->featured_map_type();
 
+		$featured_id = false;		
 		if(isset($this->options['front_page']) && $this->options['front_page']['featured_map'])
 			$featured_id = $this->options['front_page']['featured_map'];
 
@@ -721,6 +722,7 @@ include_once(get_template_directory() . '/inc/range-slider.php');
 
 function jeo_get_options() {
 	global $jeo;
+	if (!$jeo) { $jeo = new JEO(); }
 	return $jeo->get_options();
 }
 
