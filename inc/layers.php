@@ -696,6 +696,9 @@ class JEO_Layers {
  function get_layer_type($post_id = false) {
 
   global $post;
+  if (!($post || $post_id)) {
+    return false;
+  }
   $post_id = $post_id ? $post_id : $post->ID;
 
   $terms = get_the_terms($post_id, 'layer-type');
