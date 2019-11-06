@@ -711,10 +711,13 @@ class JEO_Layers {
  function get_layer($post_id = false) {
 
   global $post;
+  global $pages;
   $post_id = $post_id ? $post_id : $post->ID;
 
   $post = get_post($post_id);
   setup_postdata($post);
+  $pages = array(); // if we don't do this and we're outside the loop, we get errors on php7.2.
+  // Fix for this is in 5.2, here: https://core.trac.wordpress.org/changeset/44941
 
   $type = $this->get_layer_type();
 

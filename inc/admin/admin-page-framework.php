@@ -2341,7 +2341,7 @@ class Admin_Page_Framework_Input_Filed_Types {	// since 1.0.4
 	protected function GetSelectField() {
 		
 		// The label key must be an array for the select type.
-		if ( ! is_array( $this->arrField['label'] ) ) break;	
+		//if ( ! is_array( $this->arrField['label'] ) ) break;	
 		
 		$strOutput = "<select id='{$this->strTagID}' class='{$this->arrField['class']}' name='{$this->strFieldName}' {$this->vDisable}>";
 		foreach ( $this->arrField['label'] as $strKey => $strLabel ) {
